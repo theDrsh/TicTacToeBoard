@@ -20,3 +20,11 @@ TEST(TicTacToeBoardTest, sanityCheck)
 	ASSERT_TRUE(true);
 }
 */
+
+TEST(TicTacToeBoardTest, placePiece) {
+
+}
+
+TEST(TicTacToeBoardTest, getWinner) {
+
+}
