@@ -20,9 +20,32 @@ TEST(TicTacToeBoardTest, sanityCheck)
 	ASSERT_TRUE(true);
 }
 */
+TEST(TicTacToeBoardTest, toggleTurn) {
+  TicTacToeBoard testBoard;
+  Piece lastTurn = X;
+  Piece newTurn = testBoard.toggleTurn();
+  ASSERT_NE(newTurn, lastTurn);
+}
 
 TEST(TicTacToeBoardTest, placePiece) {
+  TicTacToeBoard testBoard;
+  Piece validPiece;
+  Piece invalidPiece;
+  validPiece = testBoard.placePiece(0,0);
+  ASSERT_NE(validPiece, Invalid);
+  invalidPiece = testBoard.placePiece(0,3);
+  ASSERT_EQ(invalidPiece, Invalid);
+  invalidPiece = testBoard.placePiece(3,3);
+  ASSERT_EQ(invalidPiece, Invalid);
+}
 
+TEST(TicTacToeBoardTest, getPiece) {
+  TicTacToeBoard testBoard;
+  Piece validPiece;
+  Piece retPiece;
+  validPiece = testBoard.placePiece(1,1);
+  retPiece = testBoard.getPiece(1,1);
+  ASSERT_EQ(validPiece, retPiece);
 }
 
 TEST(TicTacToeBoardTest, getWinner) {
