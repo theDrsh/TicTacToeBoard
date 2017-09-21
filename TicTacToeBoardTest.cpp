@@ -86,12 +86,13 @@ TEST(TicTacToeBoardTest, rowWin) {
   TicTacToeBoard testBoard;
   Piece Winner;
   for(int i = 0; i < 3; i++) {
-    testBoard.placePiece(0,i);
-    Winner = testBoard.getWinner();
-    if(Winner != Invalid) {
-      break;
+    for(int j = 0; j < 3; j++) {
+      testBoard.placePiece(i, j);
+      testBoard.placePiece(3,3);
     }
-    testBoard.placePiece(2,i);
+    Winner = testBoard.getWinner();
+    if(Winner == Invalid)
+      break;
   }
   ASSERT_NE(Invalid, Winner);
 }
@@ -100,12 +101,13 @@ TEST(TicTacToeBoardTest, columnWin) {
   TicTacToeBoard testBoard;
   Piece Winner;
   for(int i = 0; i < 3; i++) {
-    testBoard.placePiece(i,0);
-    Winner = testBoard.getWinner();
-    if(Winner != Invalid) {
-      break;
+    for(int j = 0; j < 3; j++) {
+      testBoard.placePiece(j, i);
+      testBoard.placePiece(3,3);
     }
-    testBoard.placePiece(i,2);
+    Winner = testBoard.getWinner();
+    if(Winner == Invalid)
+      break;
   }
   ASSERT_NE(Invalid, Winner);
 }
