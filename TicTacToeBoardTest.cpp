@@ -25,27 +25,61 @@ TEST(TicTacToeBoardTest, toggleTurn) {
   Piece lastTurn = X;
   Piece newTurn = testBoard.toggleTurn();
   ASSERT_NE(newTurn, lastTurn);
+  lastTurn = newTurn;
+  newTurn = testBoard.toggleTurn();
+  ASSERT_NE(newTurn, lastTurn);
+  
 }
 
 TEST(TicTacToeBoardTest, placePiece) {
   TicTacToeBoard testBoard;
   Piece validPiece;
   Piece invalidPiece;
+  Piece dupPiece;
   validPiece = testBoard.placePiece(0,0);
   ASSERT_NE(validPiece, Invalid);
+  dupPiece = testBoard.placePiece(0,0);
+  ASSERT_EQ(dupPiece, validPiece);
   invalidPiece = testBoard.placePiece(0,3);
   ASSERT_EQ(invalidPiece, Invalid);
   invalidPiece = testBoard.placePiece(3,3);
   ASSERT_EQ(invalidPiece, Invalid);
 }
 
-TEST(TicTacToeBoardTest, getPiece) {
+TEST(TicTacToeBoardTest, getBlankPiece) {
+  TicTacToeBoard testBoard;
+  Piece blankPiece;
+  blankPiece = testBoard.getPiece(0,0);
+  ASSERT_EQ(blankPiece, Blank);
+}
+
+TEST(TicTacToeBoardTest, placeGetPiece) {
   TicTacToeBoard testBoard;
   Piece validPiece;
+  Piece invalidPiece;
   Piece retPiece;
   validPiece = testBoard.placePiece(1,1);
   retPiece = testBoard.getPiece(1,1);
   ASSERT_EQ(validPiece, retPiece);
+  invalidPiece = testBoard.getPiece(3,3);
+  ASSERT_EQ(invalidPiece, Invalid);
+}
+
+TEST(TicTacToeBoardTest, coordinateTest) {
+  TicTacToeBoard testBoard;
+  Piece topLeft, topRight, botLeft, botRight;
+  topLeft = testBoard.placePiece(0,0);
+  topRight = testBoard.placePiece(0,2);
+  botLeft = testBoard.placePiece(2,0);
+  botRight = testBoard.placePiece(2,2);
+  ASSERT_EQ(topLeft, X);
+  ASSERT_EQ(topRight, O);
+  ASSERT_EQ(botLeft, X);
+  ASSERT_EQ(botRight, O);
+  ASSERT_EQ(topLeft, testBoard.getPiece(0,0));
+  ASSERT_EQ(topRight, testBoard.getPiece(0,2));
+  ASSERT_EQ(botLeft, testBoard.getPiece(2,0));
+  ASSERT_EQ(botRight, testBoard.getPiece(2,2));
 }
 
 TEST(TicTacToeBoardTest, rowWin) {
@@ -55,7 +89,6 @@ TEST(TicTacToeBoardTest, rowWin) {
     testBoard.placePiece(0,i);
     Winner = testBoard.getWinner();
     if(Winner != Invalid) {
-      std::cout << "Winner:" << Winner << std::endl;
       break;
     }
     testBoard.placePiece(2,i);
@@ -70,7 +103,6 @@ TEST(TicTacToeBoardTest, columnWin) {
     testBoard.placePiece(i,0);
     Winner = testBoard.getWinner();
     if(Winner != Invalid) {
-      std::cout << "Winner:" << Winner << std::endl;
       break;
     }
     testBoard.placePiece(i,2);
