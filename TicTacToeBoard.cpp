@@ -24,7 +24,7 @@ Piece TicTacToeBoard::toggleTurn()
     turn = O;
     return turn;
   }
-  else if(turn == O) {
+  else{
     turn = X;
     return turn;
   }
@@ -75,6 +75,11 @@ Piece TicTacToeBoard::getPiece(int row, int column)
  * Returns which Piece has won, if there is a winner, Invalid if the game
  * is not over, or Blank if the board is filled and no one has won.
 **/
+
+/** BUG: The bug is within the check to see if the board is in a draw state, it doesn't check
+* if all the squares are filled it should return blank, but it returns invalid, as if the game
+* isn't over
+**/
 Piece TicTacToeBoard::getWinner()
 {
   int squaresFilled = 0;
@@ -107,5 +112,10 @@ Piece TicTacToeBoard::getWinner()
       }
     }
   }
+  /*
+  if(squaresFilled == 9) {
+    return Blank;
+  }
+  */
   return Invalid;
 }

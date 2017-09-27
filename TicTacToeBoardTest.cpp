@@ -28,7 +28,6 @@ TEST(TicTacToeBoardTest, toggleTurn) {
   lastTurn = newTurn;
   newTurn = testBoard.toggleTurn();
   ASSERT_NE(newTurn, lastTurn);
-  
 }
 
 TEST(TicTacToeBoardTest, placePiece) {
@@ -44,6 +43,12 @@ TEST(TicTacToeBoardTest, placePiece) {
   ASSERT_EQ(invalidPiece, Invalid);
   invalidPiece = testBoard.placePiece(3,3);
   ASSERT_EQ(invalidPiece, Invalid);
+  invalidPiece = Blank;
+  invalidPiece = testBoard.placePiece(-1,0);
+  ASSERT_EQ(invalidPiece, Invalid);
+  invalidPiece = Blank;
+  invalidPiece = testBoard.placePiece(0,-1);
+  ASSERT_EQ(invalidPiece, Invalid);
 }
 
 TEST(TicTacToeBoardTest, getBlankPiece) {
@@ -51,6 +56,17 @@ TEST(TicTacToeBoardTest, getBlankPiece) {
   Piece blankPiece;
   blankPiece = testBoard.getPiece(0,0);
   ASSERT_EQ(blankPiece, Blank);
+  blankPiece = testBoard.getPiece(3,0);
+  ASSERT_EQ(blankPiece, Invalid);
+}
+
+TEST(TicTacToeBoardTest, getBadPiece) {
+  TicTacToeBoard testBoard;
+  Piece invalidPiece;
+  invalidPiece = testBoard.getPiece(-1,0);
+  ASSERT_EQ(invalidPiece, Invalid);
+  invalidPiece = testBoard.getPiece(0,-1);
+  ASSERT_EQ(invalidPiece, Invalid);
 }
 
 TEST(TicTacToeBoardTest, placeGetPiece) {
@@ -85,6 +101,8 @@ TEST(TicTacToeBoardTest, coordinateTest) {
 TEST(TicTacToeBoardTest, rowWin) {
   TicTacToeBoard testBoard;
   Piece Winner;
+  Winner = testBoard.getWinner();
+  ASSERT_EQ(Winner, Invalid);
   for(int i = 0; i < 3; i++) {
     for(int j = 0; j < 3; j++) {
       testBoard.placePiece(i, j);
@@ -100,6 +118,8 @@ TEST(TicTacToeBoardTest, rowWin) {
 TEST(TicTacToeBoardTest, columnWin) {
   TicTacToeBoard testBoard;
   Piece Winner;
+  Winner = testBoard.getWinner();
+  ASSERT_EQ(Winner, Invalid);
   for(int i = 0; i < 3; i++) {
     for(int j = 0; j < 3; j++) {
       testBoard.placePiece(j, i);
@@ -139,3 +159,15 @@ TEST(TicTacToeBoardTest, draw) {
   Winner = testBoard.getWinner();
   ASSERT_EQ(Blank, Winner);
 }
+
+TEST(TicTacToeBoardTest, winCornerCase) {
+  TicTacToeBoard testBoard;
+  Piece Winner;
+  testBoard.placePiece(0,1);
+  Winner = testBoard.getWinner();
+  ASSERT_EQ(Winner, Invalid);
+  testBoard.placePiece(1,0);
+  Winner = testBoard.getWinner();
+  ASSERT_EQ(Winner, Invalid);
+}
+
