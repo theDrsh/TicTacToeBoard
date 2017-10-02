@@ -112,10 +112,8 @@ Piece TicTacToeBoard::getWinner()
       }
     }
   }
-  /*
   if(squaresFilled == 9) {
     return Blank;
   }
-  */
   return Invalid;
 }
